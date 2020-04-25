@@ -1,0 +1,23 @@
+{
+  "name": "ts-aplikacje_webowe",
+  "version": "1.0.0",
+  "description": "Form App",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/paweldlugosz/ts-aplikacje_webowe.git"
+  },
+  "author": "Paweł Długosz",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/paweldlugosz/ts-aplikacje_webowe/issues"
+  },
+  "homepage": "https://github.com/paweldlugosz/ts-aplikacje_webowe#readme",
+  "devDependencies": {
+    "ts-loader": "^7.0.1",
+    "typescript": "^3.8.3"
+  }
+}
