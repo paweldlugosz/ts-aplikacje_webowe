@@ -8,11 +8,16 @@ export default class DateField implements Field {
     label: string;
     type: FieldType;
     value: string;
+    htmlElement: HTMLInputElement;
 
     constructor(name: string, label: string, value: string = '2020-01-01') {
         this.name = name;
         this.label = label;
         this.value = value;
+    }
+
+    getValue(): string {
+        return this.htmlElement.value;
     }
 
     render(): HTMLElement {
@@ -23,6 +28,7 @@ export default class DateField implements Field {
         input.type = 'date'
         input.value = this.value;
         wrapper.appendChild(input);
+        this.htmlElement = input;
         return wrapper;
     }
 

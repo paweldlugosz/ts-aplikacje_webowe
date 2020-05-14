@@ -8,5 +8,7 @@ export default interface Field {
     value: any;
 
     render(): HTMLElement;
+
+    getValue(): any;
     
 }

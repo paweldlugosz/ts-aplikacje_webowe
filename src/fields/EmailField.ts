@@ -8,11 +8,16 @@ export default class EmailField implements Field {
     label: string;
     type: FieldType = FieldType.Email
     value: string;
+    htmlElement: HTMLInputElement;
 
     constructor(name: string, label: string, value: string = '') {
         this.name = name;
         this.label = label;
         this.value = value;
+    }
+
+    getValue(): string {
+        return this.htmlElement.value;
     }
 
     render(): HTMLElement {
@@ -22,6 +27,7 @@ export default class EmailField implements Field {
         const input = document.createElement('input');
         input.value = this.value;
         wrapper.appendChild(input);
+        this.htmlElement = input;
         return wrapper;
     }
 

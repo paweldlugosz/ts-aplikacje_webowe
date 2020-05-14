@@ -8,11 +8,16 @@ export default class TextAreaField implements Field {
     label: string;
     type: FieldType;
     value: string;
+    htmlElement: HTMLTextAreaElement;
 
     constructor(name: string, label: string, value: string = '') {
         this.name = name;
         this.label = label;
         this.value = value;
+    }
+
+    getValue() {
+        return this.htmlElement.value
     }
     
     render(): HTMLElement {
@@ -23,6 +28,7 @@ export default class TextAreaField implements Field {
         input.rows= 4;
         input.cols= 50;
         wrapper.appendChild(input);
+        this.htmlElement = input;
         return wrapper;
     }
 

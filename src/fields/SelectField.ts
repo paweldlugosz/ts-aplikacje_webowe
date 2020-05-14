@@ -8,11 +8,16 @@ export default class SelectField implements Field {
     label: string;
     type: FieldType = FieldType.Select
     value: string[];
+    htmlElement: HTMLSelectElement;
     
     constructor(name: string, label: string, value: string[]) {
         this.name = name;
         this.label = label;
         this.value = value;
+    }
+
+    getValue(): string {
+        return this.htmlElement.value;
     }
 
     render(): HTMLElement {
@@ -26,6 +31,7 @@ export default class SelectField implements Field {
             input.appendChild(option)
         }
         wrapper.appendChild(input);
+        this.htmlElement = input;
         return wrapper;
     }
 

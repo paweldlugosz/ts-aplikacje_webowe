@@ -8,6 +8,7 @@ export default class CheckboxField implements Field {
     label: string;
     type: FieldType = FieldType.Checkbox
     value: boolean;
+    htmlElement: HTMLInputElement;
 
     constructor(name: string, label: string, value: boolean = false) {
         this.name = name;
@@ -15,15 +16,20 @@ export default class CheckboxField implements Field {
         this.value = value;
     }
 
+    getValue(): boolean {
+        return this.htmlElement.checked;
+    }
+
     render(): HTMLElement {
         const wrapper = document.createElement('div');
         const fieldLabel = new FieldLabel(this.label).render();
         wrapper.appendChild(fieldLabel);
         const input = document.createElement('input');
+        input.type = 'checkbox';
         input.name = this.name;
         input.checked = this.value;
-        const label = document.createElement('label');
-        label.innerText = this.label;
+        wrapper.appendChild(input);
+        this.htmlElement = input;
         return wrapper;
     }
 
