@@ -1,40 +1,52 @@
 import LocStorage from './LocStorage';
-import Field from '../fields/Field';
-import Entity from './Entity';
+import Data from './Data';
 
 export default class DocumentList {
 
     private readonly storage: LocStorage;
+    private documents: Data[];
 
     constructor() {
         this.storage = new LocStorage();
+        this.documents = []
+        const documentsId = this.getDocumentList();
+        for (const index in documentsId) {
+            this.documents.push(this.storage.loadDocument(documentsId[index]))
+        }
     }
 
     getDocumentList(): string[] {
         return this.storage.getDocuments();
     }
 
+    removeDocument(id: string) {
+        this.storage.removeDocument(id);
+    }
+
     render(): HTMLElement {
-        const docIds = this.getDocumentList();
-        if (docIds.length == 0) {
+        if (this.documents.length == 0) {
             const p =  document.createElement('p');
             p.innerText = "Empty list";
             return p;
         }
         const table = document.createElement('table');
         const thead = document.createElement('thead');
-        for (const key in this.storage.loadDocument(docIds[0])) {
-            console.log(key)
-        }
         const tbody = document.createElement('tbody');
-        for (const i in docIds) {
-            const doc: Entity[] = this.storage.loadDocument(docIds[i]);
+        for (const i in this.documents) {
+            const doc = this.documents[i];
             const row = document.createElement('tr');
-            for (const j in doc) {
+            for (let j = 0; j < doc.size(); j++) {
                 const value = document.createElement('td')
-                value.innerText = doc[j].value;
+                value.innerText = doc.fields[j].value;
                 row.appendChild(value);
             }
+            const deleteButton = document.createElement('button')
+            deleteButton.innerText = 'Delete'
+            deleteButton.addEventListener('click', () => {
+                this.removeDocument(doc.id)
+                tbody.removeChild(row);
+            });
+            row.appendChild(deleteButton)
             tbody.appendChild(row);
         }
         table.appendChild(tbody);

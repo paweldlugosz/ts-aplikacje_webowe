@@ -1,6 +1,7 @@
 import Storage from './Storage'
 import Entity from './Entity';
 import Field from '../fields/Field';
+import Data from './Data';
 
 export default class LocStorage implements Storage {
 
@@ -20,7 +21,7 @@ export default class LocStorage implements Storage {
             dataArray.push(new Entity(field.name, field.getValue()));
         }
         const id: string = 'document-' + Date.now();
-        const jsonData: string = JSON.stringify(dataArray);
+        const jsonData: string = JSON.stringify(new Data(id, dataArray));
         console.log(jsonData)
         localStorage.setItem(id, jsonData);
         this.documents.push(id);
@@ -29,11 +30,22 @@ export default class LocStorage implements Storage {
         return id;
     }    
     
-    loadDocument(id: string): Entity[] {
-        return JSON.parse(localStorage.getItem(id));
+    loadDocument(id: string): Data {
+        const jsonObject = JSON.parse(localStorage.getItem(id));
+        return new Data(jsonObject.id, jsonObject.fields)
     }
     getDocuments(): string[] {
         return this.documents;
+    }
+
+    removeDocument(id: string) {
+        const index = this.documents.indexOf(id);
+        if (index > -1) {
+            this.documents.splice(index, 1);
+            const jsonDocumentsIds = JSON.stringify(this.documents);
+            localStorage.setItem(LocStorage.DOCS_KEY, jsonDocumentsIds);
+            localStorage.removeItem(id);
+        }
     }
 
 }
