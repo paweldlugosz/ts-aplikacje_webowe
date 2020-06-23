@@ -6,11 +6,12 @@ export default class EmailField implements Field {
 
     name: string;    
     label: string;
-    type: FieldType = FieldType.Email
+    type: FieldType;
     value: string;
     htmlElement: HTMLInputElement;
 
     constructor(name: string, label: string, value: string = '') {
+        this.type = FieldType.Email;
         this.name = name;
         this.label = label;
         this.value = value;

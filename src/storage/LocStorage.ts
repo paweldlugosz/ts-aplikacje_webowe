@@ -18,7 +18,7 @@ export default class LocStorage implements Storage {
         const dataArray: Entity[] = [];
         for (let i = 0; i < fields.length; i++) {
             const field = fields[i];
-            dataArray.push(new Entity(field.name, field.getValue()));
+            dataArray.push(new Entity(field.name, field.label, field.type, field.getValue()));
         }
         const id: string = 'document-' + Date.now();
         const jsonData: string = JSON.stringify(new Data(id, dataArray));

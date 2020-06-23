@@ -5,19 +5,51 @@ import EmailField from './fields/EmailField';
 import SelectField from './fields/SelectField';
 import CheckboxField from './fields/CheckboxField';
 import TextAreaField from './fields/TextAreaField';
+import Storage from './storage/Storage';
+import LocStorage from './storage/LocStorage';
+import FieldType from './fields/FieldType';
+import DateField from './fields/DateField';
 
-class App {
+export default class App {
 
-    body: HTMLElement;
-    form: Form;
+    private form: Form;
+    private locStorage: Storage
 
     constructor() {
-        this.body = document.body;
-        this.form = new Form(this.initSimpleForm());
+        this.locStorage = new LocStorage()
     }
 
-    start() {
-        this.body.appendChild(this.form.render())
+    renderForm(fields: Field[] = this.initSimpleForm()) {
+        this.form = new Form(fields);
+        document.body.appendChild(this.form.render());
+    }
+
+    renderEditForm(id: string) {
+        const form = this.locStorage.loadDocument(id);
+        const fields: Field[] = [];
+        form.fields.forEach(element => {
+            switch (element.type) {
+                case FieldType.Checkbox:
+                    fields.push(new CheckboxField(element.name, element.label, element.value));
+                    break;
+                case FieldType.Date: 
+                    fields.push(new DateField(element.name, element.label, element.value));
+                    break;
+                case FieldType.Email: 
+                    fields.push(new EmailField(element.name, element.label, element.value));
+                    break;
+                case FieldType.MultilineText: 
+                    fields.push(new TextAreaField(element.name, element.label, element.value));
+                    break;
+                case FieldType.Select: 
+                    fields.push(new SelectField(element.name, element.label, element.value));
+                    break;
+                case FieldType.Text: 
+                    fields.push(new InputField(element.name, element.label, element.value));
+                    break;
+            }
+        });
+        this.renderForm(fields);
     }
 
     initSimpleForm(): Field[] {
@@ -32,6 +64,3 @@ class App {
         return fields;
     }
 }
-
-const app = new App();
-app.start()

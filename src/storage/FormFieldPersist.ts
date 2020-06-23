@@ -1,6 +1,6 @@
 import FieldType from "../fields/FieldType";
 
-export default class Entity {
+export default class FormFieldPersist {
 
     name: string;
     label: string;
@@ -13,5 +13,5 @@ export default class Entity {
         this.type = type;
         this.value = value;
     }
-
+    
 }

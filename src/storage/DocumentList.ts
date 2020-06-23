@@ -23,35 +23,40 @@ export default class DocumentList {
         this.storage.removeDocument(id);
     }
 
-    render(): HTMLElement {
+    render() {
         if (this.documents.length == 0) {
             const p =  document.createElement('p');
             p.innerText = "Empty list";
             return p;
         }
-        const table = document.createElement('table');
-        const thead = document.createElement('thead');
-        const tbody = document.createElement('tbody');
+        const wrapper = document.createElement('div');
         for (const i in this.documents) {
             const doc = this.documents[i];
-            const row = document.createElement('tr');
+            const row = document.createElement('div');
+            const h2 = document.createElement('h2');
+            h2.innerText = "Document id: " + doc.id;
+            row.appendChild(h2);
             for (let j = 0; j < doc.size(); j++) {
-                const value = document.createElement('td')
-                value.innerText = doc.fields[j].value;
+                const value = document.createElement('div')
+                const field = doc.fields[j];
+                value.innerText = field.name + ": " + field.value;
                 row.appendChild(value);
             }
+            const editButton = document.createElement('button')
+            editButton.innerText = 'Edytuj'
+            editButton.addEventListener('click', () => {
+                window.location.href = '../edit-document.html?id=' + doc.id;
+            });
+            row.appendChild(editButton)
             const deleteButton = document.createElement('button')
-            deleteButton.innerText = 'Delete'
+            deleteButton.innerText = 'Usuń'
             deleteButton.addEventListener('click', () => {
                 this.removeDocument(doc.id)
-                tbody.removeChild(row);
+                wrapper.removeChild(row);
             });
             row.appendChild(deleteButton)
-            tbody.appendChild(row);
+            wrapper.appendChild(row);
         }
-        table.appendChild(tbody);
-        return table;
+        document.body.appendChild(wrapper);
     }
 }
-
-document.body.appendChild(new DocumentList().render());

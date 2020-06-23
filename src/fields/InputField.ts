@@ -6,11 +6,12 @@ export default class InputField implements Field {
 
     name: string;    
     label: string;
-    type: FieldType = FieldType.Text
+    type: FieldType;
     value: string;
     htmlElement: HTMLInputElement;
 
     constructor(name: string, label: string, value: string = '') {
+        this.type = FieldType.Text;
         this.name = name;
         this.label = label;
         this.value = value;
@@ -25,7 +26,8 @@ export default class InputField implements Field {
         const fieldLabel = new FieldLabel(this.label).render();
         wrapper.appendChild(fieldLabel);
         const input = document.createElement('input');
-        input.type = 'text'
+        input.type = 'text';
+        input.value = this.value;
         wrapper.appendChild(input);
         this.htmlElement = input;
         return wrapper;

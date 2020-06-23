@@ -11,6 +11,7 @@ export default class TextAreaField implements Field {
     htmlElement: HTMLTextAreaElement;
 
     constructor(name: string, label: string, value: string = '') {
+        this.type = FieldType.MultilineText;
         this.name = name;
         this.label = label;
         this.value = value;
@@ -27,6 +28,7 @@ export default class TextAreaField implements Field {
         const input = document.createElement('textarea');
         input.rows= 4;
         input.cols= 50;
+        input.value = this.value;
         wrapper.appendChild(input);
         this.htmlElement = input;
         return wrapper;

@@ -22,6 +22,7 @@ export default class Form {
         }
         const backButton: HTMLButtonElement = document.createElement('button');
         backButton.innerText = 'Wstecz';
+        backButton.addEventListener('click', () => this.openMainPage() );
         wrapper.appendChild(backButton);
         const saveButton: HTMLButtonElement = document.createElement('button');
         saveButton.innerText = 'Zapisz';
@@ -32,6 +33,10 @@ export default class Form {
 
     save() {
         this.storage.saveDocument(this.fields);
+        this.openMainPage()
+    }
+
+    private openMainPage() {
         window.location.href = '../index.html';
     }
 }

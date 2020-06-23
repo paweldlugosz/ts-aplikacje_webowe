@@ -1,10 +1,7 @@
 const path = require('path');
 
 module.exports = {
-  entry: {
-    newDoc: './src/App.ts',
-    docList: './src/storage/DocumentList.ts'
-  },
+  entry: './src/router/Router.ts',
   mode: 'development',
   module: {
     rules: [

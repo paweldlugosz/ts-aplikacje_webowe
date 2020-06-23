@@ -7,4 +7,6 @@ export default interface Storage {
     loadDocument(id: string): Data;
 
     getDocuments(): string[];
+
+    removeDocument(id: string): void;
 }

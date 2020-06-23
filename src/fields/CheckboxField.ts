@@ -6,11 +6,12 @@ export default class CheckboxField implements Field {
     
     name: string;
     label: string;
-    type: FieldType = FieldType.Checkbox
+    type: FieldType;
     value: boolean;
     htmlElement: HTMLInputElement;
 
     constructor(name: string, label: string, value: boolean = false) {
+        this.type = FieldType.Checkbox;
         this.name = name;
         this.label = label;
         this.value = value;

@@ -11,6 +11,7 @@ export default class DateField implements Field {
     htmlElement: HTMLInputElement;
 
     constructor(name: string, label: string, value: string = '2020-01-01') {
+        this.type = FieldType.Date
         this.name = name;
         this.label = label;
         this.value = value;

@@ -6,11 +6,12 @@ export default class SelectField implements Field {
 
     name: string;
     label: string;
-    type: FieldType = FieldType.Select
+    type: FieldType;
     value: string[];
     htmlElement: HTMLSelectElement;
     
     constructor(name: string, label: string, value: string[]) {
+        this.type = FieldType.Select;
         this.name = name;
         this.label = label;
         this.value = value;
