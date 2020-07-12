@@ -1,5 +1,6 @@
 import FormEntity from "./FormEntity";
 import NameIdPair from "./NameIdPair";
+import Form from "../Form";
 
 export default interface FormStorage {
 
@@ -7,6 +8,6 @@ export default interface FormStorage {
 
     getFormList(): NameIdPair[]
 
-    getForm(id: string): FormEntity
+    getForm(id: string): Form
 
 }

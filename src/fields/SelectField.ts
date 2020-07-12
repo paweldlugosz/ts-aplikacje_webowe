@@ -8,6 +8,7 @@ export default class SelectField implements Field {
     label: string;
     type: FieldType;
     value: string[];
+    selection: string;
     htmlElement: HTMLSelectElement;
     
     constructor(name: string, label: string, value: string[]) {
@@ -15,6 +16,10 @@ export default class SelectField implements Field {
         this.name = name;
         this.label = label;
         this.value = value;
+    }
+
+    setSelection(selection: string) {
+        this.selection = selection;
     }
 
     getValue(): string {
@@ -31,6 +36,7 @@ export default class SelectField implements Field {
             option.value = option.innerText = this.value[i]
             input.appendChild(option)
         }
+        input.value = this.selection;
         wrapper.appendChild(input);
         this.htmlElement = input;
         return wrapper;

@@ -9,47 +9,28 @@ import Storage from './storage/Storage';
 import LocStorage from './storage/LocStorage';
 import FieldType from './fields/FieldType';
 import DateField from './fields/DateField';
+import FormStorage from './storage/FormStorage';
+import FormStorageImpl from './storage/FormStorageImpl';
 
 export default class App {
 
     private form: Form;
     private locStorage: Storage
+    private formStorage: FormStorage;
 
     constructor() {
         this.locStorage = new LocStorage()
+        this.formStorage = new FormStorageImpl();
     }
 
-    renderForm(fields: Field[] = this.initSimpleForm()) {
-        this.form = new Form(fields);
+    renderForm(id: string) {
+        this.form = this.formStorage.getForm(id);
         document.body.appendChild(this.form.render());
     }
 
     renderEditForm(id: string) {
-        const form = this.locStorage.loadDocument(id);
-        const fields: Field[] = [];
-        form.fields.forEach(element => {
-            switch (element.type) {
-                case FieldType.Checkbox:
-                    fields.push(new CheckboxField(element.name, element.label, element.value));
-                    break;
-                case FieldType.Date: 
-                    fields.push(new DateField(element.name, element.label, element.value));
-                    break;
-                case FieldType.Email: 
-                    fields.push(new EmailField(element.name, element.label, element.value));
-                    break;
-                case FieldType.MultilineText: 
-                    fields.push(new TextAreaField(element.name, element.label, element.value));
-                    break;
-                case FieldType.Select: 
-                    fields.push(new SelectField(element.name, element.label, element.value));
-                    break;
-                case FieldType.Text: 
-                    fields.push(new InputField(element.name, element.label, element.value));
-                    break;
-            }
-        });
-        this.renderForm(fields);
+        const form: Form = this.locStorage.loadDocument(id, true);
+        document.body.appendChild(form.render());
     }
 
     initSimpleForm(): Field[] {

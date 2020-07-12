@@ -1,10 +1,10 @@
-import Data from "./Data";
+import Form from "../Form";
 
 export default interface Storage {
 
-    saveDocument(doc: any): string;
+    saveDocument(form: Form): string;
 
-    loadDocument(id: string): Data;
+    loadDocument(id: string, select: boolean): Form;
 
     getDocuments(): string[];
 

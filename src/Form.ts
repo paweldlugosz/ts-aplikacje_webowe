@@ -1,13 +1,19 @@
 import Field from './fields/Field';
 import LocStorage from './storage/LocStorage';
+import Storage from './storage/Storage'
 
 export default class Form {
 
+    id: string;
+    formId: string;
+    name: string;
     fields: Field[]
-    storage: LocStorage
+    storage: Storage
 
-    constructor(fields: Field[]) {
+    constructor(formId: string, name: string, fields: Field[]) {
+        this.formId = formId;
         this.fields = fields;
+        this.name = name;
         this.storage = new LocStorage();
     }
 
@@ -17,6 +23,7 @@ export default class Form {
 
     render(): HTMLElement {
         const wrapper = document.createElement('div');
+        console.log(this.fields);
         for (let i = 0; i < this.fields.length; i++) {
             wrapper.appendChild(this.fields[i].render())
         }
@@ -32,7 +39,7 @@ export default class Form {
     }
 
     save() {
-        this.storage.saveDocument(this.fields);
+        this.storage.saveDocument(this);
         this.openMainPage()
     }
 

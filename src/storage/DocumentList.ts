@@ -1,10 +1,11 @@
 import LocStorage from './LocStorage';
 import Data from './Data';
+import Form from '../Form';
 
 export default class DocumentList {
 
     private readonly storage: LocStorage;
-    private documents: Data[];
+    private documents: Form[];
 
     constructor() {
         this.storage = new LocStorage();
@@ -25,9 +26,9 @@ export default class DocumentList {
 
     render() {
         if (this.documents.length == 0) {
-            const p =  document.createElement('p');
-            p.innerText = "Empty list";
-            return p;
+            const p = document.createElement('p');
+            p.innerText = 'Lista jest pusta';
+            document.body.appendChild(p);
         }
         const wrapper = document.createElement('div');
         for (const i in this.documents) {
@@ -36,7 +37,7 @@ export default class DocumentList {
             const h2 = document.createElement('h2');
             h2.innerText = "Document id: " + doc.id;
             row.appendChild(h2);
-            for (let j = 0; j < doc.size(); j++) {
+            for (let j = 0; j < doc.fields.length; j++) {
                 const value = document.createElement('div')
                 const field = doc.fields[j];
                 value.innerText = field.name + ": " + field.value;

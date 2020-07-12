@@ -1,6 +1,7 @@
 import LocStorage from "./LocStorage";
 import Field from "../fields/Field";
 import InputField from "../fields/InputField";
+import Form from "../Form";
 
 describe('LocStorage', () => {
 
@@ -17,13 +18,13 @@ describe('LocStorage', () => {
     });
 
     it('Insert test', () => {
-        const docId = storage.saveDocument(fields);
+        const docId = storage.saveDocument(new Form('', '', fields));
         const dataFromDb = storage.loadDocument(docId);
         expect(dataFromDb.fields.length).toEqual(2);
     });
 
     it('Remove test', () => {
-        const docId = storage.saveDocument(fields);
+        const docId = storage.saveDocument(new Form('', '', fields));
         storage.removeDocument(docId);
         const documents: string[] = storage.getDocuments();
         expect(documents.find( id => id === docId)).toEqual(undefined);
